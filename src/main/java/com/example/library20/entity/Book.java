@@ -27,6 +27,9 @@ public class Book {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "image_name")
+    private String imageName;
+
     @Column(nullable = false)
     private Integer amount;
 

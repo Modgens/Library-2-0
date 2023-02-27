@@ -1,35 +1,28 @@
 package com.example.library20.service;
 
-import com.example.library20.dto.BookDTO;
-import com.example.library20.dto.UserDTO;
-import com.example.library20.entity.Book;
-import com.example.library20.entity.Enums.Role;
 import com.example.library20.entity.User;
-import com.example.library20.repositories.BookRepository;
 import com.example.library20.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-import static com.example.library20.entity.Enums.Role.*;
 
 @Service
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
 
-//    public User create(UserDTO dto) {
-//        return userRepository.save(
-//                User.builder()
-//                        .login(dto.getLogin())
-//                        .password(dto.getPassword())
-//                        .role(dto.getRole())
-//                        .firstName(dto.getFirstName())
-//                        .lastName(dto.getLastName())
-//                        .build()
-//        );
-//    }
+    public User create(User user) {
+        return userRepository.save(
+                User.builder()
+                        .login(user.getLogin())
+                        .password(user.getPassword())
+                        .role(user.getRole())
+                        .firstName(user.getFirstName())
+                        .lastName(user.getLastName())
+                        .build()
+        );
+    }
 
     public List<User> getAll() {
         return userRepository.findAll();

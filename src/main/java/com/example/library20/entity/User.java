@@ -6,7 +6,6 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -45,19 +44,6 @@ public class User implements UserDetails {
 
     @Transient
     private Collection<? extends GrantedAuthority> authorities;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "subs_users",
-            joinColumns = {@JoinColumn(name = "subscription_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
-    )
-    private Subscription subscription;
-
-    public void setSubscription(Subscription subscription) {
-        subscription.setUser(this);
-        this.subscription = subscription;
-    }
 
     /**
      *  SECURITY

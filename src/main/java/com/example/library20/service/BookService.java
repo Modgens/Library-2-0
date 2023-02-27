@@ -1,9 +1,10 @@
 package com.example.library20.service;
-
-import com.example.library20.dto.BookDTO;
 import com.example.library20.entity.Book;
+import com.example.library20.entity.dto.BookResponse;
 import com.example.library20.repositories.BookRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,20 +14,23 @@ import java.util.List;
 public class BookService {
     private final BookRepository bookRepository;
 
-    public Book create(BookDTO dto) {
+    public Book create(Book book) {
         return bookRepository.save(Book.builder()
-                .title(dto.getTitle())
-                .amount(dto.getAmount())
-                .description(dto.getDescription())
-                .year(dto.getYear())
-                .publisher(dto.getPublisher())
-                .genres(dto.getGenres())
-                .authors(dto.getAuthors())
+                .title(book.getTitle())
+                .amount(book.getAmount())
+                .description(book.getDescription())
+                .year(book.getYear())
+                .publisher(book.getPublisher())
+                .genres(book.getGenres())
+                .authors(book.getAuthors())
                 .build());
     }
 
-    public List<Book> getAll() {
-        return bookRepository.findAll();
+    public Page<BookResponse> getAll(Pageable pageable) {
+        return DtoManager.init().listOfBookToResponseBook(bookRepository.findAll(pageable));
+    }
+    public Page<BookResponse> getAllByTitle( String title, Pageable pageable) {
+        return DtoManager.init().listOfBookToResponseBook(bookRepository.findAllByTitleIsContaining(title, pageable));
     }
 
     public Book update(Book book) {
@@ -37,10 +41,10 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    public Book getById(Long id) {
+    public BookResponse getById(Long id) {
         var book = bookRepository.findById(id);
         if(book.isPresent())
-            return book.get();
+            return DtoManager.init().bookToBookResponse(book.get());
         throw new NullPointerException();
     }
 }

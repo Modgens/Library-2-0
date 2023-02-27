@@ -2,15 +2,12 @@ package com.example.library20.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Embeddable
-@Getter
-@Setter
+@Data
 @EqualsAndHashCode
 public class OrderKey implements Serializable {
 

@@ -1,26 +1,33 @@
 package com.example.library20.auth;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/v1/auth")
+@Controller
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticationService service;
 
-    @PostMapping("/register")
-    public void register(@RequestBody RegisterRequest request) {
-        service.register(request);
+    @GetMapping("/register")
+    public String registrationPage() {
+        return "html/registration";
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(service.authenticate(request));
+    @PostMapping("/register")
+    public String register(
+            @RequestParam String firstName,
+            @RequestParam String lastName,
+            @RequestParam String login,
+            @RequestParam String password
+    ) {
+        try {
+            service.register(new RegisterRequest(firstName, lastName, login, password));
+        } catch (Exception ex) {
+            return "redirect:/register?failed=User with this login already exists";
+        }
+        return "redirect:/register?success";
     }
 }

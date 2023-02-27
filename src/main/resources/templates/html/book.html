@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <title>Library</title>
+</head>
+<body>
+
+<input type="hidden" id="status" th:value="${param.status}">
+
+<!--  Menu  -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Library 2.0</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/books" th:classappend="${ url.equals('/books')? 'active' : '' }">All Books</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/orders" th:classappend="${ url.equals('/orders')? 'active' : '' }">My Orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout" th:classappend="${ url.equals('/logout')? 'active' : '' }">Log Out</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!--   Book Details Card   -->
+  <div class="container mt-5 mb-5">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-10">
+
+        <!--  Back Button  -->
+        <a class="btn btn-secondary my-2" onclick="history.go(-1)">⇽ Back</a>
+
+        <div class="card">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="images p-3">
+                <div class="text-center px-4"> <img th:src="${'/getImage/' + book.getImgName()}" id="main-image" src="1.jpg" width="250" /> </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div>
+                <div class="mt-4">
+                  <h5 th:text="${book.getTitle()}" class="text-uppercase"></h5>
+                  <p th:text="${'Authors: ' + book.getAuthors()}"></p>
+                  <p th:text="${'Genres: ' + book.getGenres()}"></p>
+                  <p th:text="${'Year Of Publication: ' + book.getYear() + ' year'}"></p>
+                  <p th:text="${'Publisher: ' + book.getPublisher()}"></p>
+                  <p th:text="${book.getAmount() > 0 ? 'Available' : 'Not Available' }" th:style="${book.getAmount() > 0 ? 'color: #00FF00;' : 'color: #D2042D;' }" class="fst-italic"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cart mx-5 align-items-center">
+            <form action="/order" method="post" class="me-2">
+              <input th:value="${book.getId()}" type="hidden" name="bookId">
+              <input th:value="${url}" type="hidden" name="url">
+              <button class="btn btn-danger text-uppercase" style="width: 250px;" type="submit">Order</button>
+            </form>
+
+          </div>
+          <div class="row m-4">
+            <h3 class="text-center">Description</h3>
+            <p th:text="${book.getDescription()}"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  Error Handler / Bootstrap 5 JS  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+<script type="text/javascript">
+  const status = document.getElementById("status").value;
+  if(status==="success") {
+    swal("Congrats", "Book Order Successfully", "success");
+  }
+  else if(status==="failed"){
+    swal("Sorry", "Error", "error");
+  }
+</script>
+
+</body>
+</html>

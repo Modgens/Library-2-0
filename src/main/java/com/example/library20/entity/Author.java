@@ -2,17 +2,16 @@ package com.example.library20.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.HashSet;
 import java.util.Set;
 
-@Table(name = "authors")
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
-@ToString
+@Table(name = "authors")
 @Builder
+@Data
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +23,8 @@ public class Author {
     @Column(nullable = false)
     private String lastName;
 
-    @ManyToMany(mappedBy = "authors")
-    private Set<Book> books;
-
+    public Author(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }
