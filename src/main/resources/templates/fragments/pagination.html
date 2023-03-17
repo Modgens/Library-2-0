@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="pagination">
+  <nav aria-label="Page navigation" th:if="${page.totalPages > 1}">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${page.number == 0 ? 'disabled' : ''}">
+        <a class="page-link" th:href="@{${url}(page=0)}">First</a>
+      </li>
+      <li class="page-item" th:classappend="${page.number == 0 ? 'disabled' : ''}">
+        <a class="page-link" th:href="@{${url}(page=${page.number - 1})}">Previous</a>
+      </li>
+      <li class="page-item" th:classappend="${page.number == 0 ? 'disabled' : ''}">
+        <a class="page-link" th:href="@{${url}(page=0)}">1</a>
+      </li>
+      <li class="page-item" th:if="${page.number > 7}">
+        <a class="page-link">...</a>
+      </li>
+      <li class="page-item" th:each="i : ${#numbers.sequence(page.number - 6, page.number + 6)}" th:unless="${i < 1 or i >= page.totalPages - 1}" th:classappend="${page.number == i ? 'disabled' : ''}">
+        <a class="page-link" th:href="@{${url}(page=${i})}" th:text="${i + 1}">1</a>
+      </li>
+      <li class="page-item" th:if="${page.totalPages - page.number > 8}">
+        <a class="page-link">...</a>
+      </li>
+      <li class="page-item" th:classappend="${page.number == page.totalPages - 1 ? 'disabled' : ''}">
+        <a class="page-link" th:href="@{${url}(page=${page.totalPages - 1})}" th:text="${page.totalPages}">1</a>
+      </li>
+      <li class="page-item" th:classappend="${page.number == page.totalPages - 1 ? 'disabled' : ''}">
+        <a class="page-link" th:href="@{${url}(page=${page.number + 1})}">Next</a>
+      </li>
+      <li class="page-item" th:classappend="${page.number == page.totalPages - 1 ? 'disabled' : ''}">
+        <a class="page-link" th:href="@{${url}(page=${page.totalPages - 1})}">Last</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+</body>
+</html>

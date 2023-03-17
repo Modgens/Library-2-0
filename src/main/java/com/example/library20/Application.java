@@ -15,10 +15,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @SpringBootApplication
 public class Application {
@@ -31,12 +30,12 @@ public class Application {
         return args -> {
             Faker faker = new Faker();
             for (int i = 0; i < 4; i++) {
-                Set<Author> authors = new HashSet<>();
+                List<Author> authors = new ArrayList<>();
                 authors.add(new Author(faker.name().firstName(), faker.name().lastName()));
                 authors.add(new Author(faker.name().firstName(), faker.name().lastName()));
                 authorRepository.saveAll(authors);
 
-                Set<Genre> genres = new HashSet<>();
+                List<Genre> genres = new ArrayList<>();
                 genres.add(new Genre(faker.book().genre()));
                 genres.add(new Genre(faker.book().genre()));
                 genreRepository.saveAll(genres);
@@ -52,7 +51,7 @@ public class Application {
                                 .amount(faker.number().randomDigit())
                                 .authors(authors)
                                 .genres(genres)
-                                .imageName("1.jpg")
+                                .imageName("default.jpg")
                                 .description(String.join("", faker.lorem().paragraphs(20)))
                                 .build()
             );

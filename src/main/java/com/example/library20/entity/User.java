@@ -6,10 +6,8 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -40,7 +38,7 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "user")
-    private Set<Order> orders = new HashSet<>();
+    private List<Order> orders;
 
     @Transient
     private Collection<? extends GrantedAuthority> authorities;

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,11 +39,24 @@ public class Book {
     private Publisher publisher;
 
     @ManyToMany
-    private Set<Genre> genres;
+    private List<Genre> genres;
 
-    @ManyToMany
-    private Set<Author> authors;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private List<Author> authors;
 
     @OneToMany(mappedBy = "book")
-    private Set<Order> orders;
+    private List<Order> orders;
+
+    public Book increaseAmount(){
+        this.amount++;
+        return this;
+    }
+    public Book reduceAmount(){
+        this.amount--;
+        return this;
+    }
 }

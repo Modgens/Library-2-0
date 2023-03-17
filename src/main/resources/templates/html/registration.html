@@ -31,19 +31,19 @@
           <div class="container mt-3">
             <form action="/auth/register" method="post">
               <div class="form-floating mb-3 mt-3">
-                <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" name="firstName">
+                <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" name="firstName" minlength="2">
                 <label for="firstName">First Name</label>
               </div>
               <div class="form-floating mt-3 mb-3">
-                <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" name="lastName">
+                <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" name="lastName" minlength="2">
                 <label for="lastName">Last Name</label>
               </div>
               <div class="form-floating mb-3 mt-3">
-                <input type="text" class="form-control" id="login" placeholder="Enter login" name="login">
+                <input type="text" class="form-control" id="login" placeholder="Enter login" name="login" minlength="6">
                 <label for="login">Login</label>
               </div>
               <div class="form-floating mt-3 mb-3">
-                <input type="text" class="form-control" id="password" placeholder="Enter password" name="password">
+                <input class="form-control" id="password" placeholder="Enter password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" type="password" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
                 <label for="password">Password</label>
               </div>
 

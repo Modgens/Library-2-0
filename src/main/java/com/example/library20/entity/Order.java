@@ -17,7 +17,6 @@ import java.sql.Date;
 public class Order {
     @EmbeddedId
     private OrderKey id;
-
     private Date start_date;
     private Date end_date;
 
@@ -34,4 +33,6 @@ public class Order {
     @MapsId("bookId")
     @JoinColumn(name = "book_id")
     private Book book;
+
+
 }

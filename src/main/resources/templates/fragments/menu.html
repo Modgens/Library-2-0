@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="menu">
+    <!--  Menu  -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Library 2.0</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <p th:text="${session.get('userRole')}"></p>
+            <div class="collapse navbar-collapse" id="navbarNav" th:switch="${session.get('userRole')}">
+                <!--  USER Menu  -->
+                <ul class="navbar-nav ms-auto" th:case="'USER'">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/books/public/all" th:classappend="${ url.equals('/books/public/all')? 'active' : '' }">All Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/orders/all" th:classappend="${ url.equals('/orders/all')? 'active' : '' }">My Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout" th:classappend="${ url.equals('/logout')? 'active' : '' }">Log Out</a>
+                    </li>
+                </ul>
+                <!--  LIBRARIAN Menu  -->
+                <ul class="navbar-nav ms-auto" th:case="'LIBRARIAN'">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/books/public/all" th:classappend="${ url.equals('/books/public/all')? 'active' : '' }">All Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/orders/edit/all" th:classappend="${ url.equals('/orders/edit/all')? 'active' : '' }">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout" th:classappend="${ url.equals('/logout')? 'active' : '' }">Log Out</a>
+                    </li>
+                </ul>
+                <!--  ADMIN Menu  -->
+                <ul class="navbar-nav ms-auto" th:case="'ADMIN'">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/books/public/all" th:classappend="${ url.equals('/books/public/all')? 'active' : '' }">All Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/books/table" th:classappend="${ url.equals('/books/table')? 'active' : '' }">Books List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authors/all" th:classappend="${ url.equals('/authors/all')? 'active' : '' }">Authors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/publishers/all" th:classappend="${ url.equals('/publishers/all')? 'active' : '' }">Publishers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/librarians/all" th:classappend="${ url.equals('/librarians/all')? 'active' : '' }">Librarians</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout" th:classappend="${ url.equals('/logout')? 'active' : '' }">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

@@ -1,5 +1,7 @@
 package com.example.library20.controller;
 
+import com.example.library20.service.ImageService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,21 +11,14 @@ import java.io.InputStream;
 
 
 @Controller
+@RequiredArgsConstructor
 public class ImageController {
 
-    private final String IMG_PATH = "/templates/img/";
+    private final ImageService imageService;
 
     @GetMapping(value = "/getImage/{imageName}")
     public @ResponseBody byte[] getImage(@PathVariable String imageName)  {
-        InputStream in = getClass().getResourceAsStream(IMG_PATH + imageName);
-        try {
-            if (in != null) {
-                return in.readAllBytes();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
+        return imageService.getImg(imageName);
     }
 
 }
